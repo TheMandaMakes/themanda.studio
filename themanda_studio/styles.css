@@ -1,0 +1,90 @@
+:root{
+  --nav-bg: #ffffff;
+  --nav-link-color: #222;
+  --nav-link-hover-bg: #f3f4f6;
+  --dropdown-bg: #fff;
+  --accent: #2563eb;
+}
+
+*{box-sizing:border-box}
+
+nav{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0.5rem 1rem;
+}
+
+/* Horizontal nav */
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;              /* makes the nav horizontal */
+  gap: 1rem;
+  align-items: center;
+}
+
+/* each top-level item */
+.nav-links > li {
+  position: relative;         /* needed so dropdown can position absolute */
+}
+
+/* link styling */
+.nav-links a {
+  text-decoration: none;
+  color: var(--nav-link-color);
+  padding: 0.5rem 0.75rem;
+  display: inline-block;
+  border-radius: 6px;
+  transition: background .15s ease, color .15s ease;
+}
+
+/* hover + keyboard focus */
+.nav-links a:hover,
+.nav-links a:focus {
+  background: var(--nav-link-hover-bg);
+}
+
+/* dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  display: none;              /* hidden by default */
+  background: var(--dropdown-bg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  padding: 0.25rem 0;
+  min-width: 200px;
+  z-index: 200;
+}
+
+/* dropdown menu items */
+.dropdown-menu li { list-style: none; }
+.dropdown-menu a { display:block; padding:0.5rem 0.75rem; }
+
+/* show dropdown on hover and when focused inside (keyboard accessible) */
+.dropdown:hover > .dropdown-menu,
+.dropdown:focus-within > .dropdown-menu {
+  display: block;
+}
+
+/* small caret marker */
+.dropdown > a::after {
+  content: " ▾";
+  font-size: 0.9em;
+  margin-left: 6px;
+}
+
+/* Responsive: stack nav on small screens */
+@media (max-width: 640px) {
+  .nav-links { flex-direction: column; align-items:flex-start; gap:0.25rem; }
+  .dropdown-menu {
+    position: static;        /* put submenu into document flow on small screens */
+    box-shadow: none;
+    padding-left: 0.5rem;
+  }
+  /* By default, keep the submenu hidden on mobile; JS can toggle the `open` class */
+  .dropdown .dropdown-menu { display: none; }
+  .dropdown.open > .dropdown-menu { display: block; }
+}
